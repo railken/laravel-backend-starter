@@ -160,6 +160,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        
+        Railken\Laravel\Manager\ManagerServiceProvider::class,
+        Railken\Laravel\App\AppServiceProvider::class,
+
     ],
 
     /*

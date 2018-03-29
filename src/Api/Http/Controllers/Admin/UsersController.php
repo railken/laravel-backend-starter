@@ -18,7 +18,7 @@ class UsersController extends RestController
 
     protected static $query = [
         'id',
-        'username',
+        'name',
         'email',
         'password',
         'enabled',
@@ -27,7 +27,7 @@ class UsersController extends RestController
     ];
 
     protected static $fillable = [
-        'username',
+        'name',
         'email',
         'password',
         'enabled',

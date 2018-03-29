@@ -5,7 +5,7 @@
 		<h1>Welcome to Jafra!</h1>
 	</div>
 	<div class="content">
-		<p><b>Hey {{ $user->username }},</b></p>
+		<p><b>Hey {{ $user->name }},</b></p>
 
 		<p>Allons-y! Thanks for registering an account with MangaRader.</p>
 

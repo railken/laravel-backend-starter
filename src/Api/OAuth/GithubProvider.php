@@ -83,7 +83,7 @@ class GithubProvider extends Provider
 
         $body = json_decode($response->getBody());
      
-        $user->username = $body->name;
+        $user->name = $body->name;
         $user->avatar = $body->avatar_url;
 
         $response = $client->request('GET', "https://api.github.com/user/emails", [

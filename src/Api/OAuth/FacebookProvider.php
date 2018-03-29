@@ -97,7 +97,7 @@ class FacebookProvider extends Provider
             throw new Exceptions\EmailNotFoundException();
         }
 
-        $user->username = $body->first_name;
+        $user->name = $body->first_name;
         $user->email = $body->email;
 
         $user->id = $body->id;

@@ -85,7 +85,7 @@ class GoogleProvider extends Provider
         $body = json_decode($response->getBody());
   
         $user->email = $body->email;
-        $user->username = $body->name ? $body->name : explode("@", $user->email)[0];
+        $user->name = $body->name ? $body->name : explode("@", $user->email)[0];
         $user->id = $body->id;
         $user->avatar = $body->picture;
 

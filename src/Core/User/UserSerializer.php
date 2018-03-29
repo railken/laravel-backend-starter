@@ -26,21 +26,14 @@ class UserSerializer extends ModelSerializer
     {
         $bag = new Bag($entity->toArray());
 
-
-        $bag->set('avatar', (new Avatar())->create($entity->username)->toBase64()->getEncoded());
-
         if ($select) {
             $bag = $bag->only($select->toArray());
         }
 
+        $bag = $bag->only($this->manager->authorizer->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
 
+        $bag->set('avatar', (new Avatar())->create($entity->name)->toBase64()->getEncoded());
 
-        // $bag = $bag->only($this->manager->authorizer->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
-
-        $entity->fileHealthCard && $bag->set('file_health_card_url',  env('APP_URL'). Storage::url($entity->fileHealthCard->path));
-        $entity->fileDocFront   && $bag->set('file_doc_front_url',  env('APP_URL'). Storage::url($entity->fileDocFront->path));
-        $entity->fileDocBack    && $bag->set('file_doc_back_url',  env('APP_URL'). Storage::url($entity->fileDocBack->path));
-        $entity->fileAvatar     && $bag->set('file_avatar_url',  env('APP_URL'). Storage::url($entity->fileAvatar->path));
         return $bag;
     }
 }

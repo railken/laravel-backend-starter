@@ -88,7 +88,7 @@ class AccountController extends Controller
      */
     public function username(Request $request)
     {
-        $result = $this->manager->update($this->getUser(), new \Railken\Bag(['username' => $request->input('username')]));
+        $result = $this->manager->update($this->getUser(), new \Railken\Bag(['name' => $request->input('name')]));
 
         if (!$result->ok()) {
             return $this->error(['errors' => $result->getSimpleErrors()]);

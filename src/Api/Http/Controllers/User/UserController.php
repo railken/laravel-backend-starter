@@ -32,18 +32,17 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // $this->initialize($request);
-        return $this->success(['data' => [
-            'resource' => $this->manager->serializer->serialize(
-                $this->getUser(),
+        return $this->success(['resource' => $this->manager->serializer->serialize(
+            $this->getUser(),
                 collect([
                     'id',
                     'avatar',
-                    'username',
+                    'name',
                     'email',
                     'password',
                     'created_at'
                 ])
             )->all()
-        ]]);
+        ]);
     }
 }

@@ -37,9 +37,9 @@ class UserService
      */
     public function register(array $params)
     {
-        $params = new UserParameterBag($params);
+        $params = new Bag($params);
  
-        $result = $this->manager->create($params->only(['username', 'password', 'email']));
+        $result = $this->manager->create($params->only(['name', 'password', 'email']));
 
         if ($result->ok()) {
             $user = $result->getResource();

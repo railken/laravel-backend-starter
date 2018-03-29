@@ -34,34 +34,8 @@ class User extends Authenticatable implements EntityContract
         'password',
         'firstname',
         'lastname',
-        'phone',
-        'tax_code',
-        'sponsor_firstname',
-        'sponsor_lastname',
-        'doc_id_code',
-        'doc_id_released_from',
-        'doc_id_released_date',
-        'kit_number',
-        'iban',
-        'birth_city',
-        'birth_province',
-        'birth_day',
-        'vat_number',
-        'income',
-        'pension_type',
-        'public_employment_type',
-        'tos1',
-        'tos2',
-        'tos3',
-        'tos4',
-        'tos5',
-        'tos6',
         'enabled',
-        'moderated',
-        'role',
-        'uid',
-        'valid_from_at',
-        'valid_to_at'
+        'name',
     ];
 
     /**
@@ -70,14 +44,6 @@ class User extends Authenticatable implements EntityContract
      * @var array
      */
     protected $casts = [
-        'tos1' => 'integer',
-        'tos2' => 'integer',
-        'tos3' => 'integer',
-        'tos4' => 'integer',
-        'tos5' => 'integer',
-        'tos6' => 'integer',
-        'moderated' => 'integer',
-        'income' => 'integer',
 
     ];
 
@@ -108,45 +74,6 @@ class User extends Authenticatable implements EntityContract
         return $this->hasOne(UserPendingEmail::class, 'user_id')->latest();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function residence1()
-    {
-        return $this->belongsTo(Address::class, 'residence_1_id')->latest();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function residence2()
-    {
-        return $this->belongsTo(Address::class, 'residence_2_id')->latest();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function fileDocBack()
-    {
-        return $this->belongsTo(File::class, 'file_doc_back_id')->latest();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function fileDocFront()
-    {
-        return $this->belongsTo(File::class, 'file_doc_front_id')->latest();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function fileHealthCard()
-    {
-        return $this->belongsTo(File::class, 'file_health_card_id')->latest();
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -178,7 +105,7 @@ class User extends Authenticatable implements EntityContract
     public function findForPassport($identifier)
     {
         return (new \Core\User\UserManager())->getRepository()->getQuery()->orWhere(function ($q) use ($identifier) {
-            return $q->orWhere('email', $identifier);
+            return $q->orWhere('email', $identifier)->orWhere('name', $identifier);
         })->where('enabled', 1)->first();
     }
 }

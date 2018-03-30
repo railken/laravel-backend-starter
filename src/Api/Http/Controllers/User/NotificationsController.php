@@ -78,7 +78,7 @@ class NotificationsController extends RestController
     {
         $resource = $this->manager->getRepository()->findOneById($id);
 
-        if (!$resource) {
+        if (!$resource && $resource->notifiable->id !== $this->getUser()->id) {
             return $this->not_found();
         }
 
@@ -99,7 +99,7 @@ class NotificationsController extends RestController
     {
         $resource = $this->manager->getRepository()->findOneById($id);
 
-        if (!$resource) {
+        if (!$resource && $resource->notifiable->id !== $this->getUser()->id) {
             return $this->not_found();
         }
 

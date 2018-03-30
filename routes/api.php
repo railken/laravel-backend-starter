@@ -32,6 +32,13 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
 
 
     Route::group(['middleware' => ['auth:api']], function() {
+
+        Route::group(['prefix' => 'notifications'], function() {
+            Route::get('/', ['uses' => '\Api\Http\Controllers\User\NotificationsController@index']);
+            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\User\NotificationsController@remove']);
+            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\User\NotificationsController@show']);
+        });
+
         Route::get('/user', ['uses' => '\Api\Http\Controllers\User\UserController@index']);
     });
 

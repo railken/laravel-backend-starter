@@ -27,9 +27,13 @@ class LogManager extends ModelManager
      * @var array
      */
     protected $attributes = [
+        Attributes\Id\IdAttribute::class,
         Attributes\Message\MessageAttribute::class,
         Attributes\Category\CategoryAttribute::class,
         Attributes\Vars\VarsAttribute::class,
+        Attributes\Type\TypeAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
     ];
     
     /**

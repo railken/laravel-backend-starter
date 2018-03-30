@@ -78,5 +78,11 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
             Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@remove']);
             Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@show']);
         });
+
+        Route::group(['prefix' => 'logs'], function() {
+            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\LogsController@index']);
+            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\LogsController@remove']);
+            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\LogsController@show']);
+        });
     });
 });

@@ -20,7 +20,12 @@ class Log extends Model implements EntityContract
      *
      * @var array
      */
-    protected $fillable = ['type', 'category', 'message', 'vars'];
+    protected $fillable = [
+        'type', 
+        'category', 
+        'message', 
+        'vars'
+    ];
 
     /**
      * The attributes that should be cast to native types.

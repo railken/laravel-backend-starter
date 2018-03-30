@@ -24,15 +24,16 @@ class EventServiceProvider extends ServiceProvider
         ]
     ];
 
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
+   public function boot()
     {
         parent::boot();
 
-        //
+        Event::listen('eloquent.*', function($eventName) {
+
+            // print_r($eventName."\n");
+            // if(!starts_with($eventName, "illuminate.log")) {
+                // \Log::info("Event fired: " . $eventName . "\n");
+            // }
+        });
     }
 }

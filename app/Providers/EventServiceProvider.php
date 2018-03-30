@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Core\User\Events\UserRequestConfirmEmail' => [
             'Emails\Listeners\UserSendConfirmationEmail'
+        ],
+        'Core\User\Events\UserRegistered' => [
+            'App\User\Listeners\UserRegistered'
         ]
     ];
 

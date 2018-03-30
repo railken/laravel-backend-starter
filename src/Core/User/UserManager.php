@@ -25,6 +25,7 @@ class UserManager extends ModelManager
         Attributes\Email\EmailAttribute::class,
         Attributes\Password\PasswordAttribute::class,
         Attributes\Enabled\EnabledAttribute::class,
+        Attributes\Role\RoleAttribute::class,
     ];
 
     /**

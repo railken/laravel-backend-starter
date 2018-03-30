@@ -33,7 +33,7 @@ class UserSerializer extends ModelSerializer
         $bag = $bag->only($this->manager->authorizer->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
 
         $bag->set('avatar', (new Avatar())->create($entity->name)->toBase64()->getEncoded());
-
+        $bag->set('notifications', $entity->unreadNotifications);
         return $bag;
     }
 }

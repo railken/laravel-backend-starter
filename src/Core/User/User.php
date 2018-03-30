@@ -36,6 +36,7 @@ class User extends Authenticatable implements EntityContract
         'lastname',
         'enabled',
         'name',
+        'role',
     ];
 
     /**

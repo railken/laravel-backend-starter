@@ -35,8 +35,9 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
 
         Route::group(['prefix' => 'notifications'], function() {
             Route::get('/', ['uses' => '\Api\Http\Controllers\User\NotificationsController@index']);
-            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\User\NotificationsController@remove']);
             Route::get('/{id}', ['uses' => '\Api\Http\Controllers\User\NotificationsController@show']);
+            Route::post('/{id}/read', ['uses' => '\Api\Http\Controllers\User\NotificationsController@markAsRead']);
+            Route::post('/{id}/unread', ['uses' => '\Api\Http\Controllers\User\NotificationsController@markAsUnread']);
         });
 
         Route::get('/user', ['uses' => '\Api\Http\Controllers\User\UserController@index']);

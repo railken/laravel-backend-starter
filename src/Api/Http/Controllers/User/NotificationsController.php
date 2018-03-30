@@ -65,4 +65,46 @@ class NotificationsController extends RestController
         return $this->manager->repository->getQuery()->where(['notifiable_type' => 'Core\User\User', 'notifiable_id' => $this->getUser()->id])->whereNull('read_at');
     }
 
+
+    /**
+     * Mark a notification as read
+     *
+     * @param integer $id
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return response
+     */
+    public function markAsRead($id, Request $request)
+    {
+        $resource = $this->manager->getRepository()->findOneById($id);
+
+        if (!$resource) {
+            return $this->not_found();
+        }
+
+        $resource->markAsRead();
+
+        return $this->success([]);
+    }
+
+    /**
+     * Mark a notification as unread
+     *
+     * @param integer $id
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return response
+     */
+    public function markAsUnread($id, Request $request)
+    {
+        $resource = $this->manager->getRepository()->findOneById($id);
+
+        if (!$resource) {
+            return $this->not_found();
+        }
+
+        $resource->markAsUnread();
+        
+        return $this->success([]);
+    }
 }

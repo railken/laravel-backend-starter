@@ -62,7 +62,7 @@ class NotificationsController extends RestController
      */
     public function getQuery()
     {
-        return $this->manager->repository->getQuery()->where(['notifiable_type' => 'Core\User\User', 'notifiable_id' => $this->getUser()->id])->whereNull('read_at');
+        return $this->manager->repository->getQuery()->where(['notifiable_type' => 'Core\User\User', 'notifiable_id' => $this->getUser()->id]);
     }
 
 

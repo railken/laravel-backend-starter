@@ -27,7 +27,11 @@ class FileManager extends ModelManager
         Attributes\Checksum\ChecksumAttribute::class,
         Attributes\CreatedAt\CreatedAtAttribute::class,
         Attributes\UpdatedAt\UpdatedAtAttribute::class,
-        Attributes\DeletedAt\DeletedAtAttribute::class
+        Attributes\DeletedAt\DeletedAtAttribute::class,
+        Attributes\UserId\UserIdAttribute::class,
+        Attributes\Access\AccessAttribute::class,
+        Attributes\Permission\PermissionAttribute::class,
+        Attributes\ExpireAt\ExpireAtAttribute::class,
     ];
 
     /**
@@ -63,19 +67,25 @@ class FileManager extends ModelManager
      *
      * @return string path
      */
-    public function upload($content)
-    {
-        do {
-            $filename = "public/uploads/".sha1(rand(2, 9999) * rand(2, 9999) * microtime(true));
-        } while ($this->getRepository()->newQueryOneDiskPath($filename)->count() > 0);
+    public function upload($dir, $content, $filename = null, $ext = null, $access = 'private')
+    {   
 
+        // No filename? Generated a new one.
+        if (!$filename) {
+            do {
+                $filename = $dir."/".str_random(32)."-".str_random(32)."-".str_random(32)."-".str_random(32);
+            } while ($this->getRepository()->newQueryOneDiskPath($filename)->count() > 0);
+        }
 
-        Storage::disk('local')->put($filename, $content);
+        // No extension? Try to detect
+        if (!$ext) {
+            Storage::disk('local')->put($filename, $content);
 
-        $mimetype = Storage::disk('local')->mimeType($filename);
-        $ext = array_search($mimetype, config('filesystems.mime_types'));
+            $mimetype = Storage::disk('local')->mimeType($filename);
+            $ext = array_search($mimetype, config('filesystems.mime_types'));
+        }
 
-        $mimetype = Storage::disk('local')->move($filename, $filename.".".$ext);
+        Storage::put($filename.".".$ext, $content, $access === 'public' ? 'public' : null);
 
         return $filename.".".$ext;
     }
@@ -92,7 +102,6 @@ class FileManager extends ModelManager
     {
         switch ($encoding) {
             case 'base64': default:
-
                 $content = preg_replace("/^data\:image\/([\w]*)\;base64\,/", "", $content);
                 return base64_decode($content);
             break;

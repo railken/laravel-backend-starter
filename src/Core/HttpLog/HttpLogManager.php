@@ -13,7 +13,20 @@ class HttpLogManager extends ModelManager
      *
      * @var array
      */
-    protected $attributes = [Attributes\Id\IdAttribute::class, Attributes\Name\NameAttribute::class, Attributes\CreatedAt\CreatedAtAttribute::class, Attributes\UpdatedAt\UpdatedAtAttribute::class, Attributes\DeletedAt\DeletedAtAttribute::class, Attributes\Url\UrlAttribute::class, Attributes\Type\TypeAttribute::class, Attributes\Method\MethodAttribute::class, Attributes\Category\CategoryAttribute::class, Attributes\Request\RequestAttribute::class, Attributes\Response\ResponseAttribute::class, Attributes\Ip\IpAttribute::class];
+    protected $attributes = [
+        Attributes\Id\IdAttribute::class, 
+        Attributes\Name\NameAttribute::class, 
+        Attributes\CreatedAt\CreatedAtAttribute::class, 
+        Attributes\UpdatedAt\UpdatedAtAttribute::class, 
+        Attributes\DeletedAt\DeletedAtAttribute::class, 
+        Attributes\Url\UrlAttribute::class, 
+        Attributes\Type\TypeAttribute::class, 
+        Attributes\Method\MethodAttribute::class, 
+        Attributes\Category\CategoryAttribute::class, 
+        Attributes\Request\RequestAttribute::class, 
+        Attributes\Response\ResponseAttribute::class, 
+        Attributes\Ip\IpAttribute::class
+    ];
 
     /**
      * List of all exceptions.

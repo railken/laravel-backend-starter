@@ -46,6 +46,10 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
 
     Route::group(['middleware' => ['auth:api', 'admin'], 'prefix' => 'admin'], function() {
 
+        Route::post('/files/upload', ['uses' => '\Api\Http\Controllers\Admin\FilesController@upload']);
+        Route::get('/files/{id}', ['uses' => '\Api\Http\Controllers\Admin\FilesController@show']);
+        Route::delete('/files/{id}', ['uses' => '\Api\Http\Controllers\Admin\FilesController@remove']);
+
 
         Route::group(['prefix' => 'users'], function() {
             Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\UsersController@index']);

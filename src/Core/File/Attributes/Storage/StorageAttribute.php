@@ -65,4 +65,16 @@ class StorageAttribute extends BaseAttribute
     {
         return in_array($value, ['url', 'disk']);
     }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return 'disk';
+    }
 }

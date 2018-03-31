@@ -17,9 +17,14 @@ class CreateTableFiles extends Migration
             $table->increments('id');
             $table->string('storage')->default('disk');
             $table->string('path');
-            $table->string('type');
-            $table->string('status');
+            $table->string('type')->nullable();
+            $table->string('status')->nullable();
             $table->string('checksum');
+            $table->string('access')->default('public');
+            $table->string('permission')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamp('expire_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

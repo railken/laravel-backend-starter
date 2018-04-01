@@ -13,6 +13,7 @@ class FilesController extends RestController
 {
     use RestTraits\RestIndexTrait;
     use RestTraits\RestShowTrait;
+    use RestTraits\RestRemoveTrait;
 
 
     protected static $query = [

@@ -7,6 +7,8 @@ use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\Contracts\ParameterBagContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\ParameterBag;
+use Railken\Laravel\Manager\ResultAction;
+use Illuminate\Support\Facades\DB;
 use Railken\Laravel\Manager\Tokens;
 use Illuminate\Support\Facades\Storage;
 
@@ -107,4 +109,38 @@ class FileManager extends ModelManager
             break;
         }
     }
+
+
+    /**
+     * Delete a EntityContract.
+     *
+     * @param EntityContract $entity
+     *
+     * @return ResultAction
+     */
+    protected function delete(EntityContract $entity)
+    {
+        $result = new ResultAction();
+
+        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, ParameterBag::factory([])));
+
+        if (!$result->ok()) {
+            return $result;
+        }
+
+        try {
+            DB::beginTransaction();
+            $entity->delete();
+            Storage::delete($entity->path);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+
+        return $result;
+    }
+
+
 }

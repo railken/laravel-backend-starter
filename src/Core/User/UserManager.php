@@ -21,11 +21,14 @@ class UserManager extends ModelManager
      * @var array
      */
     protected $attributes = [
+        Attributes\Id\IdAttribute::class,
         Attributes\Name\NameAttribute::class,
         Attributes\Email\EmailAttribute::class,
         Attributes\Password\PasswordAttribute::class,
         Attributes\Enabled\EnabledAttribute::class,
         Attributes\Role\RoleAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
     ];
 
     /**

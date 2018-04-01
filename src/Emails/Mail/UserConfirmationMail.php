@@ -7,10 +7,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Emails\Traits\Logger;
+
 
 class UserConfirmationMail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable, SerializesModels, Logger;
 
     /**
      * The user instance.
@@ -36,6 +38,6 @@ class UserConfirmationMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view($this->user->enabled ? 'Emails::user_confirmation_change_email' : 'Emails::user_confirmation_email')->subject('MangaReader');
+        return $this->view($this->user->enabled ? 'Emails::user_confirmation_change_email' : 'Emails::user_confirmation_email')->subject('Welcome');
     }
 }

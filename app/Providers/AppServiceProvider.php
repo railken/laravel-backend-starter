@@ -15,6 +15,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        foreach (\Core\Env\Env::all() as $env) {
+            if ($env->value != null) {
+                config([$env->key => $env->value]);
+            }
+        }
     }
 
     /**

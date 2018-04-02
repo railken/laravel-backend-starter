@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        foreach (\Core\Env\Env::all() as $env) {
+        foreach ((new \Core\Config\ConfigManager())->getRepository()->newQuery()->get() as $env) {
             if ($env->value != null) {
                 config([$env->key => $env->value]);
             }

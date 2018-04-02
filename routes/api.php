@@ -51,6 +51,14 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
         Route::delete('/files/{id}', ['uses' => '\Api\Http\Controllers\Admin\FilesController@remove']);
 
 
+        Route::group(['prefix' => 'envs'], function() {
+            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\EnvsController@index']);
+            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\EnvsController@create']);
+            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\EnvsController@update']);
+            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\EnvsController@remove']);
+            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\EnvsController@show']);
+        });
+
         Route::group(['prefix' => 'users'], function() {
             Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\UsersController@index']);
             Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\UsersController@create']);

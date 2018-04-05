@@ -28,6 +28,7 @@ class MailListenersController extends RestController
     public static $query = [
         'id',
         'target', 
+        'subject', 
         'content',
         'enabled',
         'event_class',
@@ -42,6 +43,7 @@ class MailListenersController extends RestController
      */
     public static $fillable = [
         'target', 
+        'subject', 
         'content',
         'enabled',
         'event_class',

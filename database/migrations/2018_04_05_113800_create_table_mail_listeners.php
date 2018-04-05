@@ -16,6 +16,7 @@ class CreateTableMailListeners extends Migration
         Schema::create('mail_listeners',function($table) {
             $table->increments('id');
             $table->text('target');
+            $table->string('subject');
             $table->longtext('content');
             $table->string('event_class');
             $table->boolean('enabled');

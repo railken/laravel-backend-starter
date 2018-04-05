@@ -1,20 +1,20 @@
 <?php
 
-namespace Core\MailListener\Attributes\Content;
+namespace Core\MailListener\Attributes\Subject;
 
 use Railken\Laravel\Manager\Attributes\BaseAttribute;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
 
-class ContentAttribute extends BaseAttribute
+class SubjectAttribute extends BaseAttribute
 {
     /**
      * Name attribute.
      *
      * @var string
      */
-    protected $name = 'content';
+    protected $name = 'subject';
 
     /**
      * Is the attribute required
@@ -37,17 +37,17 @@ class ContentAttribute extends BaseAttribute
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_DEFINED    => Exceptions\MailListenerContentNotDefinedException::class,
-        Tokens::NOT_VALID      => Exceptions\MailListenerContentNotValidException::class,
-        Tokens::NOT_AUTHORIZED => Exceptions\MailListenerContentNotAuthorizedException::class,
+        Tokens::NOT_DEFINED    => Exceptions\MailListenerSubjectNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\MailListenerSubjectNotValidException::class,
+        Tokens::NOT_AUTHORIZED => Exceptions\MailListenerSubjectNotAuthorizedException::class,
     ];
 
     /**
      * List of all permissions.
      */
     protected $permissions = [
-        Tokens::PERMISSION_FILL => 'maillistener.attributes.content.fill',
-        Tokens::PERMISSION_SHOW => 'maillistener.attributes.content.show',
+        Tokens::PERMISSION_FILL => 'maillistener.attributes.subject.fill',
+        Tokens::PERMISSION_SHOW => 'maillistener.attributes.subject.show',
     ];
 
     /**
@@ -60,6 +60,6 @@ class ContentAttribute extends BaseAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        return true;
+        return v::length(1, 255)->validate($value);
     }
 }

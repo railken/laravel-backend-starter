@@ -20,5 +20,5 @@ class MailListener extends Model implements EntityContract
      *
      * @var array
      */
-    protected $fillable = ['created_at', 'updated_at', 'target', 'content', 'enabled', 'event_class'];
+    protected $fillable = ['created_at', 'updated_at', 'target', 'content', 'enabled', 'event_class', 'subject'];
 }

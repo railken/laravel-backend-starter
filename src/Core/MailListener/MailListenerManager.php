@@ -20,7 +20,8 @@ class MailListenerManager extends ModelManager
         Attributes\Target\TargetAttribute::class, 
         Attributes\Content\ContentAttribute::class, 
         Attributes\Enabled\EnabledAttribute::class, 
-        Attributes\EventClass\EventClassAttribute::class
+        Attributes\EventClass\EventClassAttribute::class,
+        Attributes\Subject\SubjectAttribute::class
     ];
 
     /**

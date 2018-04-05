@@ -11,6 +11,7 @@ class UserRegistered
     use SerializesModels;
 
     public $user;
+    public $token;
 
     /**
      * Create a new event instance.
@@ -21,5 +22,6 @@ class UserRegistered
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->token = $user->pendingEmail->token;
     }
 }

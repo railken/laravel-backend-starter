@@ -19,21 +19,11 @@ class EventServiceProvider extends ServiceProvider
         'Core\User\Events\UserRequestConfirmEmail' => [
             'Emails\Listeners\UserSendConfirmationEmail'
         ],
-        'Core\User\Events\UserRegistered' => [
-            'App\User\Listeners\UserRegistered'
-        ]
     ];
 
    public function boot()
     {
         parent::boot();
 
-        Event::listen('eloquent.*', function($eventName) {
-
-            // print_r($eventName."\n");
-            // if(!starts_with($eventName, "illuminate.log")) {
-                // \Log::info("Event fired: " . $eventName . "\n");
-            // }
-        });
     }
 }

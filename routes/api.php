@@ -99,5 +99,13 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
             Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailLogsController@remove']);
             Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailLogsController@show']);
         });
+
+        Route::group(['prefix' => 'mail-listeners'], function() {
+            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@index']);
+            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@create']);
+            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@update']);
+            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@remove']);
+            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@show']);
+        });
     });
 });

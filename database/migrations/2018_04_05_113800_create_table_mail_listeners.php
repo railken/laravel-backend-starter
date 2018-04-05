@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableConfigs extends Migration
+class CreateTableMailListeners extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,13 @@ class CreateTableConfigs extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('configs', function($table) {
+    {  
+        Schema::create('mail_listeners',function($table) {
             $table->increments('id');
-            $table->text('key');
-            $table->text('value');
+            $table->text('target');
+            $table->longtext('content');
+            $table->string('event_class');
+            $table->boolean('enabled');
             $table->timestamps();
         });
     }

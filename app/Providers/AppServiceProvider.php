@@ -18,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
 
         foreach ((new \Core\Config\ConfigManager())->getRepository()->newQuery()->get() as $env) {
             if ($env->value != null) {
-                config([$env->key => $env->value]);
+
+                $key = $env->resolveKey($env->key);
+                config([$key => $env->value]);
             }
         }
     }

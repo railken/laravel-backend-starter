@@ -5,6 +5,8 @@ namespace Core\Config;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
+use Railken\Laravel\Manager\ResultAction;
+
 
 class ConfigManager extends ModelManager
 {
@@ -43,5 +45,23 @@ class ConfigManager extends ModelManager
         $this->setAuthorizer(new ConfigAuthorizer($this));
 
         parent::__construct($agent);
+    }
+
+    /**
+     * massive
+     */
+    public function massive($params)
+    {
+        $result = new ResultAction();
+
+        foreach ($params as $key => $value) {
+            $config = $this->getRepository()->newQuery()->where('key', $key)->first();
+
+            $result = $config ? $this->update($config, ['value' => $value]) : $this->create(['key' => $key, 'value' => $value]);
+
+            $result->addErrors($result->getErrors());
+        }
+
+        return $result;
     }
 }

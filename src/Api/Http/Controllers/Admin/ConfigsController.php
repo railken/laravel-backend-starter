@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Core\Config\ConfigManager;
 use Api\Http\Controllers\Traits as RestTraits;
 use Api\Http\Controllers\RestController;
+use Railken\Bag;
 
 class ConfigsController extends RestController
 {
@@ -45,6 +46,8 @@ class ConfigsController extends RestController
         return $this->manager->repository->getQuery();
     }
 
+
+
     /**
      * Create a resource
      *
@@ -53,20 +56,19 @@ class ConfigsController extends RestController
      *
      * @return response
      */
-    public function create(Request $request)
+    public function update(Request $request)
     {
-        $resource = $this->manager->getRepository()->newQuery()->where('key', $request->input('key'))->first();
 
-        $before = $resource ? $this->manager->serializer->serialize($resource)->toArray() : [];
+        $params = new Bag($request->all());
 
-        $params = $request->only($this->keys->fillable);
+        
+        $params = $params->only(['mail_host', 'mail_port', 'mail_username', 'mail_password', 'mail_encryption', 'mail_from_name', 'mail_from_address']);
 
-        $result = $resource ? $this->manager->update($resource, $params) : $this->manager->create($params);
-
+        $result = $this->manager->massive($params);
 
         if ($result->ok()) {
 
-            $m = new \Core\Log\LogManager();
+            /*$m = new \Core\Log\LogManager();
             $m->create([
                 'type' => 'api',
                 'category' => 'update',
@@ -78,11 +80,9 @@ class ConfigsController extends RestController
                     'after' => $this->manager->serializer->serialize($result->getResource())->toArray(),
                     'user_id' => $this->getUser()->id
                 ]
-            ]);
+            ]);*/
 
-            return $this->success([
-                'resource' => $this->manager->serializer->serialize($result->getResource(), $this->keys->selectable)->all()
-            ]);
+            return $this->success(['message' => 'ok']);
         }
 
         return $this->error([

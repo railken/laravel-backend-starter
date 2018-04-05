@@ -53,7 +53,7 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
 
         Route::group(['prefix' => 'configs'], function() {
             Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\ConfigsController@index']);
-            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\ConfigsController@create']);
+            Route::patch('/', ['uses' => '\Api\Http\Controllers\Admin\ConfigsController@update']);
         });
 
         Route::group(['prefix' => 'users'], function() {

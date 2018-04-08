@@ -24,10 +24,10 @@ class NotificationsController extends RestController
      */
     public static $query = [
         'id',
-        'type', 
+        'type',
         'notifiable_type',
-        'notifiable_id', 
-        'data', 
+        'notifiable_id',
+        'data',
         'read_at',
         'created_at',
         'updated_at',
@@ -40,10 +40,10 @@ class NotificationsController extends RestController
      */
     public static $selectable = [
         'id',
-        'type', 
+        'type',
         'notifiable_type',
-        'notifiable_id', 
-        'data', 
+        'notifiable_id',
+        'data',
         'read_at',
         'created_at',
         'updated_at',

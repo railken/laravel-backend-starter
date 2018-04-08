@@ -22,23 +22,18 @@ trait RestIndexTrait
      * @return response
      */
     public function index(Request $request)
-    {   
+    {
         return $this->createIndexResponseByQuery($this->getQuery(), $request);
     }
 
     public function createIndexResponseByQuery($query, Request $request)
     {
-
-
         \DB::enableQuerylog();
         # FilterSyntaxException
         try {
-
             if ($request->input('query')) {
-
                 $query = $this->filterQuery($query, $request);
             }
-            
         } catch (QuerySyntaxException $e) {
             return $this->error(["code" => "QUERY_SYNTAX_ERROR", "message" => "syntax error detected in filter"]);
         }
@@ -48,26 +43,29 @@ trait RestIndexTrait
         $sort->setKeys($this->keys->sortable->toArray());
 
 
-        # Check if sort field has 
+        # Check if sort field has
         $sort->add($request->input('sort_field', 'id'), strtolower($request->input('sort_direction', 'desc')));
 
-        foreach ($sort->get() as $attribute)
+        foreach ($sort->get() as $attribute) {
             $query->orderBy($this->parseKey($attribute->getName()), $attribute->getDirection());
+        }
 
 
         # Select
         $select = collect(explode(",", $request->input("select", "")));
 
-        $select->count() > 0 && 
-            $select = $this->keys->selectable->filter(function($attr) use ($select) { return $select->contains($attr); });
+        $select->count() > 0 &&
+            $select = $this->keys->selectable->filter(function ($attr) use ($select) {
+                return $select->contains($attr);
+            });
 
        
-        $select->count() == 0 && 
+        $select->count() == 0 &&
             $select = $this->keys->selectable;
 
 
         $selectable = $select
-            ->map(function($key){ 
+            ->map(function ($key) {
                 return $this->parseKey($key);
             });
 
@@ -82,7 +80,7 @@ trait RestIndexTrait
             ->get();
 
         $response = $this->success([
-            'resources' => $resources->map(function($record) use ($select) {
+            'resources' => $resources->map(function ($record) use ($select) {
                 return $this->serialize($record, $select);
             }),
             'select' => $select->values(),
@@ -94,8 +92,8 @@ trait RestIndexTrait
         return $response;
     }
 
-    public function filterQuery($query, $request) {
-
+    public function filterQuery($query, $request)
+    {
         $filter = new Filter();
 
         $parser = $filter->getParser();

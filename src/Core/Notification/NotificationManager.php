@@ -14,12 +14,12 @@ class NotificationManager extends ModelManager
      * @var array
      */
     protected $attributes = [
-        Attributes\Id\IdAttribute::class, 
-        Attributes\CreatedAt\CreatedAtAttribute::class, 
-        Attributes\UpdatedAt\UpdatedAtAttribute::class, 
-        Attributes\Type\TypeAttribute::class, 
-        Attributes\NotifiableType\NotifiableTypeAttribute::class, 
-        Attributes\NotifiableId\NotifiableIdAttribute::class, 
+        Attributes\Id\IdAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
+        Attributes\Type\TypeAttribute::class,
+        Attributes\NotifiableType\NotifiableTypeAttribute::class,
+        Attributes\NotifiableId\NotifiableIdAttribute::class,
         Attributes\ReadAt\ReadAtAttribute::class,
         Attributes\Data\DataAttribute::class
     ];

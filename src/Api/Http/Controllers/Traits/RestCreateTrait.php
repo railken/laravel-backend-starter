@@ -26,7 +26,6 @@ trait RestCreateTrait
         $result = $manager->create($request->only($this->keys->fillable));
 
         if ($result->ok()) {
-
             $m = new \Core\Log\LogManager();
             $m->create([
                 'type' => 'api',

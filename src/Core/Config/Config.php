@@ -22,7 +22,7 @@ class Config extends Model implements EntityContract
      * @var array
      */
     protected $fillable = [
-        'value', 
+        'value',
         'key'
     ];
 
@@ -31,9 +31,10 @@ class Config extends Model implements EntityContract
         'value'
     ];
 
-    public function resolveKey($key) {
+    public function resolveKey($key)
+    {
         $configs = [
-            'mail_host' => 'mail.host', 
+            'mail_host' => 'mail.host',
             'mail_port' => 'mail.port',
             'mail_username' => 'mail.username',
             'mail_password' => 'mail.password',
@@ -42,6 +43,6 @@ class Config extends Model implements EntityContract
             'mail_from_address' => 'mail.from.address',
         ];
 
-        return isset($configs[$key]) ? $configs[$key] : 'void'; 
+        return isset($configs[$key]) ? $configs[$key] : 'void';
     }
 }

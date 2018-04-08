@@ -6,7 +6,6 @@ use Railken\SQ\Contracts\NodeContract;
 use Railken\SQ\Languages\BoomTree\Nodes as Nodes;
 use Railken\Laravel\ApiHelpers\Query\Visitors\BaseVisitor;
 
-
 class KeyVisitor extends BaseVisitor
 {
 
@@ -36,7 +35,6 @@ class KeyVisitor extends BaseVisitor
      */
     public function visit($query, NodeContract $node, string $context)
     {
-
         if ($node instanceof Nodes\KeyNode) {
             $key = $node->getValue();
             $keys = explode(".", $key);

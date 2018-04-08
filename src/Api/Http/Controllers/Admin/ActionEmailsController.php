@@ -28,8 +28,8 @@ class ActionEmailsController extends RestController
     public static $query = [
         'id',
         'name',
-        'targets', 
-        'subject', 
+        'targets',
+        'subject',
         'template',
         'created_at',
         'updated_at',
@@ -42,13 +42,13 @@ class ActionEmailsController extends RestController
      */
     public static $fillable = [
         'name',
-        'targets', 
-        'subject', 
+        'targets',
+        'subject',
         'template',
     ];
 
-    public function __construct(EmailManager $manager){
-
+    public function __construct(EmailManager $manager)
+    {
         $this->manager = $manager;
         parent::__construct();
     }
@@ -62,5 +62,4 @@ class ActionEmailsController extends RestController
     {
         return $this->manager->repository->getQuery();
     }
-
 }

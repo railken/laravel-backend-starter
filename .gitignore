@@ -15,3 +15,5 @@ yarn-error.log
 composer\.lock
 
 resources/views/cache/
+
+\.php_cs\.cache

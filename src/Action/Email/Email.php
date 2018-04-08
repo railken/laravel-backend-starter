@@ -56,5 +56,4 @@ class Email extends Model implements EntityContract
     {
         (new EmailManager())->resolve($this, $event);
     }
-                 
 }

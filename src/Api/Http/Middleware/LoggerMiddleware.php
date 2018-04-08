@@ -17,18 +17,17 @@ class LoggerMiddleware
 
     public function terminate($request, $response)
     {
+        $params = $request->all();
 
-    	$params = $request->all();
-
-    	unset($params['password']);
-    	unset($params['card']);
+        unset($params['password']);
+        unset($params['card']);
 
         // don't log the api that shows logs
         if ($request->path() === 'api/v1/admin/http-logs') {
             return;
         }
 
-    	$lm = new \Core\HttpLog\HttpLogManager();
+        $lm = new \Core\HttpLog\HttpLogManager();
         $log = $lm->create([
             'type' => 'inbound',
             'category' => 'api',

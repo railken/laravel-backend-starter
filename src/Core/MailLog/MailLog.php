@@ -21,5 +21,4 @@ class MailLog extends Model implements EntityContract
      * @var array
      */
     protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at', 'to', 'body', 'to_name', 'sent', 'subject'];
-
 }

@@ -50,8 +50,8 @@ class MailLogsController extends RestController
         'updated_at',
     ];
 
-    public function __construct(MailLogManager $manager){
-
+    public function __construct(MailLogManager $manager)
+    {
         $this->manager = $manager;
         parent::__construct();
     }
@@ -65,5 +65,4 @@ class MailLogsController extends RestController
     {
         return $this->manager->repository->getQuery();
     }
-
 }

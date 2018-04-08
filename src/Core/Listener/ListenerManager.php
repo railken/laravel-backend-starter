@@ -14,14 +14,14 @@ class ListenerManager extends ModelManager
      * @var array
      */
     protected $attributes = [
-        Attributes\Id\IdAttribute::class, 
-        Attributes\Name\NameAttribute::class, 
-        Attributes\CreatedAt\CreatedAtAttribute::class, 
-        Attributes\UpdatedAt\UpdatedAtAttribute::class, 
-        Attributes\Description\DescriptionAttribute::class, 
-        Attributes\EventClass\EventClassAttribute::class, 
+        Attributes\Id\IdAttribute::class,
+        Attributes\Name\NameAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
+        Attributes\Description\DescriptionAttribute::class,
+        Attributes\EventClass\EventClassAttribute::class,
         Attributes\ActionType\ActionTypeAttribute::class,
-        Attributes\ActionId\ActionIdAttribute::class,  
+        Attributes\ActionId\ActionIdAttribute::class,
         Attributes\Enabled\EnabledAttribute::class
     ];
 

@@ -21,17 +21,16 @@ class HttpLog extends Model implements EntityContract
      * @var array
      */
     protected $fillable = [
-        'id', 
-        'name', 
-        'created_at', 
-        'updated_at', 
-        'url', 
-        'type', 
-        'method', 
-        'category', 
-        'request', 
-        'response', 
+        'id',
+        'name',
+        'created_at',
+        'updated_at',
+        'url',
+        'type',
+        'method',
+        'category',
+        'request',
+        'response',
         'ip'
     ];
-
 }

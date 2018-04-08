@@ -48,8 +48,7 @@ class RegistrationController extends Controller
             $errors = $result->getSimpleErrors();
 
             if ($request->header('Test', 0) === 'validate') {
-
-                $errors = $errors->filter(function($error) {
+                $errors = $errors->filter(function ($error) {
                     return strpos($error['code'], "_NOT_DEFINED") === false && $error['value'] !== null;
                 });
 

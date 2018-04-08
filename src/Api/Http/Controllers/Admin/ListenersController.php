@@ -48,11 +48,11 @@ class ListenersController extends RestController
         'event_class',
         'action_id',
         'action_type',
-        'enabled',  
+        'enabled',
     ];
 
-    public function __construct(ListenerManager $manager){
-
+    public function __construct(ListenerManager $manager)
+    {
         $this->manager = $manager;
         parent::__construct();
     }
@@ -66,5 +66,4 @@ class ListenersController extends RestController
     {
         return $this->manager->repository->getQuery();
     }
-
 }

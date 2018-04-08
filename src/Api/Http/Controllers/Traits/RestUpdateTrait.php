@@ -37,7 +37,6 @@ trait RestUpdateTrait
 
 
         if ($result->ok()) {
-
             $m = new \Core\Log\LogManager();
             $m->create([
                 'type' => 'api',

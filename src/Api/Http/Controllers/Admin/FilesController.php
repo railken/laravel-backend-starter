@@ -71,8 +71,8 @@ class FilesController extends RestController
             'storage' => 'disk',
             'type' => $params->get('type', 'default'),
             'path' => $manager->upload(
-                $params->get('type', 'default'), 
-                $manager->decode('base64_decode', $params->get('content')), 
+                $params->get('type', 'default'),
+                $manager->decode('base64_decode', $params->get('content')),
                 $params->get('filename', null),
                 $params->get('extension', null),
                 $params->get('access', 'private')

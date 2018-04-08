@@ -22,9 +22,9 @@ class Listener extends Model implements EntityContract
      */
     protected $fillable = [
         'name',
-        'description', 
-        'event_class', 
-        'action_id', 
+        'description',
+        'event_class',
+        'action_id',
         'action_type',
         'enabled'
     ];

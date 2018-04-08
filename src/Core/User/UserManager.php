@@ -94,8 +94,6 @@ class UserManager extends ModelManager
      */
     public function delete(EntityContract $entity)
     {
-        
-
         $result = new ResultAction();
 
         $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, ParameterBag::factory([])));
@@ -212,6 +210,4 @@ class UserManager extends ModelManager
 
         return parent::update($entity, $parameters, $permission);
     }
-
-
 }

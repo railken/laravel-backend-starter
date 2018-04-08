@@ -58,7 +58,6 @@ class ConfigsController extends RestController
      */
     public function update(Request $request)
     {
-
         $params = new Bag($request->all());
 
         

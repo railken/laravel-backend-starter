@@ -21,9 +21,9 @@ class Log extends Model implements EntityContract
      * @var array
      */
     protected $fillable = [
-        'type', 
-        'category', 
-        'message', 
+        'type',
+        'category',
+        'message',
         'vars'
     ];
 

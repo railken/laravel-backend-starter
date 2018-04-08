@@ -14,13 +14,13 @@ class MailLogManager extends ModelManager
      * @var array
      */
     protected $attributes = [
-        Attributes\Id\IdAttribute::class, 
-        Attributes\CreatedAt\CreatedAtAttribute::class, 
-        Attributes\UpdatedAt\UpdatedAtAttribute::class, 
-        Attributes\DeletedAt\DeletedAtAttribute::class, 
+        Attributes\Id\IdAttribute::class,
+        Attributes\CreatedAt\CreatedAtAttribute::class,
+        Attributes\UpdatedAt\UpdatedAtAttribute::class,
+        Attributes\DeletedAt\DeletedAtAttribute::class,
         Attributes\To\ToAttribute::class,
         Attributes\Body\BodyAttribute::class,
-        Attributes\ToName\ToNameAttribute::class, 
+        Attributes\ToName\ToNameAttribute::class,
         Attributes\Sent\SentAttribute::class,
         Attributes\Subject\SubjectAttribute::class
      ];

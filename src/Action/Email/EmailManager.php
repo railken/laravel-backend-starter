@@ -59,11 +59,10 @@ class EmailManager extends ModelManager
      */
     public function resolve(Email $action, $event)
     {
-
         $target = $event->user;
         $data = (array)$event;
 
-        $targets = (new Collection($action->targets))->map(function($target) use ($event) {
+        $targets = (new Collection($action->targets))->map(function ($target) use ($event) {
             return str_replace("{{\$target->email}}", $event->user->email, $target);
         })->toArray();
 

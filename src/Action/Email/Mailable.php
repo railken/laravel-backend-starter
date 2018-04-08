@@ -51,7 +51,6 @@ class Mailable extends BaseMailable implements ShouldQueue
                 'body' => view($this->buildView(), $this->buildViewData()),
                 'sent' => 1,
             ]);
-
         }
     }
 }

@@ -9,7 +9,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Emails\Traits\Logger;
 
-
 class UserConfirmationMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels, Logger;

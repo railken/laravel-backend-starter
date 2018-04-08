@@ -25,9 +25,9 @@ class LogsController extends RestController
      */
     public static $query = [
         'id',
-        'type', 
-        'category', 
-        'message', 
+        'type',
+        'category',
+        'message',
         'vars',
         'created_at',
         'updated_at',
@@ -40,16 +40,16 @@ class LogsController extends RestController
      */
     public static $selectable = [
         'id',
-        'type', 
-        'category', 
-        'message', 
+        'type',
+        'category',
+        'message',
         'vars',
         'created_at',
         'updated_at',
     ];
 
-    public function __construct(LogManager $manager){
-
+    public function __construct(LogManager $manager)
+    {
         $this->manager = $manager;
         parent::__construct();
     }
@@ -63,5 +63,4 @@ class LogsController extends RestController
     {
         return $this->manager->repository->getQuery();
     }
-
 }

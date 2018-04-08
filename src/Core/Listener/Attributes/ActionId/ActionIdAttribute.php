@@ -103,9 +103,7 @@ class ActionIdAttribute extends BelongsToAttribute
     public function valid(EntityContract $entity, $value)
     {
         try {
-
-           return parent::valid($entity, $value);
-
+            return parent::valid($entity, $value);
         } catch (Exceptions\ListenerActionIdManagerNotFoundException $e) {
             return false;
         }
@@ -122,19 +120,14 @@ class ActionIdAttribute extends BelongsToAttribute
      */
     public function update(EntityContract $entity, ParameterBagContract $parameters)
     {
-
         $errors = new Collection();
 
         try {
-
-           return parent::update($entity, $parameters);
-
+            return parent::update($entity, $parameters);
         } catch (Exceptions\ListenerActionIdManagerNotFoundException $e) {
             $errors->push(new $this->exceptions[Tokens::NOT_VALID]($parameters->get($this->getName())));
         }
 
         return $errors;
-      
     }
-
 }

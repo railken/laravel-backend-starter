@@ -15,24 +15,17 @@ class ListenerServiceProvider extends ServiceProvider
     public function register()
     {
         Listener::observe(ListenerObserver::class);
-
         
-        Event::listen('Core*', function($event_name, $events) {
+        Event::listen('Core*', function ($event_name, $events) {
+            $manager = new \Core\Listener\ListenerManager();
 
-        	$manager = new \Core\Listener\ListenerManager();
+            $listeners = $manager->getRepository()->findByEventClass($event_name);
 
-        	$listeners = $manager->getRepository()->findByEventClass($event_name);
-
-        	foreach ($listeners as $listener) {
-
+            foreach ($listeners as $listener) {
                 foreach ($events as $event) {
-                	$action = $listener->action;
-
-                	$action->resolve($event);
+                    $listener->action->resolve($event);
                 }
-                
-        	}
+            }
         });
     }
-
 }

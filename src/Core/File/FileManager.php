@@ -70,7 +70,7 @@ class FileManager extends ModelManager
      * @return string path
      */
     public function upload($dir, $content, $filename = null, $ext = null, $access = 'private')
-    {   
+    {
 
         // No filename? Generated a new one.
         if (!$filename) {
@@ -141,6 +141,4 @@ class FileManager extends ModelManager
 
         return $result;
     }
-
-
 }

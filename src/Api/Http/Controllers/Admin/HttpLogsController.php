@@ -25,12 +25,12 @@ class HttpLogsController extends RestController
      */
     public static $query = [
         'id',
-        'url', 
+        'url',
         'type',
-        'method', 
-        'category', 
+        'method',
+        'category',
         'request',
-        'response', 
+        'response',
         'ip',
         'created_at',
         'updated_at',
@@ -43,19 +43,19 @@ class HttpLogsController extends RestController
      */
     public static $selectable = [
         'id',
-        'url', 
+        'url',
         'type',
-        'method', 
-        'category', 
+        'method',
+        'category',
         'request',
-        'response', 
+        'response',
         'ip',
         'created_at',
         'updated_at',
     ];
 
-    public function __construct(HttpLogManager $manager){
-
+    public function __construct(HttpLogManager $manager)
+    {
         $this->manager = $manager;
         parent::__construct();
     }
@@ -69,5 +69,4 @@ class HttpLogsController extends RestController
     {
         return $this->manager->repository->getQuery();
     }
-
 }

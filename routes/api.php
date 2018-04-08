@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-function rest($prefix, $controller)
+function rest($prefix, $controller, $group = null)
 {
-    Route::group(['prefix' => $prefix], function() use ($controller) {
+    Route::group(['prefix' => $prefix], function() use ($controller, $group) {
         Route::get('/', ['uses' => $controller.'@index']);
         Route::post('/', ['uses' => $controller.'@create']);
         Route::put('/{id}', ['uses' => $controller.'@update']);
         Route::delete('/{id}', ['uses' => $controller.'@remove']);
         Route::get('/{id}', ['uses' => $controller.'@show']);
+
+        $group && is_callable($group) && $group($controller);
     });
 }
 
@@ -110,7 +112,9 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
             Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailLogsController@show']);
         });
 
-        rest('action-emails', '\Api\Http\Controllers\Admin\ActionEmailsController');
+        rest('action-emails', '\Api\Http\Controllers\Admin\ActionEmailsController', function($controller) {
+            Route::post('/render', ['uses' => $controller.'@renderTemplate']);
+        });
         rest('listeners', '\Api\Http\Controllers\Admin\ListenersController');
     });
 });

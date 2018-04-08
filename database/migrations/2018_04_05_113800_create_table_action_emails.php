@@ -16,6 +16,8 @@ class CreateTableActionEmails extends Migration
         Schema::create('action_emails',function($table) {
             $table->increments('id');
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->text('mock_data');
             $table->text('targets');
             $table->string('subject');
             $table->longtext('template');

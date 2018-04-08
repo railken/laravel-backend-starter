@@ -24,7 +24,8 @@ class EmailManager extends ModelManager
         Attributes\DeletedAt\DeletedAtAttribute::class,
         Attributes\Targets\TargetsAttribute::class,
         Attributes\Subject\SubjectAttribute::class,
-        Attributes\Template\TemplateAttribute::class
+        Attributes\Template\TemplateAttribute::class,
+        Attributes\MockData\MockDataAttribute::class
     ];
 
     /**

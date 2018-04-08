@@ -20,7 +20,7 @@ class Email extends Model implements EntityContract
      *
      * @var array
      */
-    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at', 'targets', 'subject', 'content', 'template'];
+    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at', 'targets', 'subject', 'content', 'template', 'mock_data'];
 
     /**
      * Set the the email targets

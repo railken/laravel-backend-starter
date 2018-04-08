@@ -46,4 +46,15 @@ class Email extends Model implements EntityContract
     {
         return json_decode($value, true);
     }
+
+    /**
+     * Resolve event
+     *
+     * @param $event
+     */
+    public function resolve($event)
+    {
+        (new EmailManager())->resolve($this, $event);
+    }
+                 
 }

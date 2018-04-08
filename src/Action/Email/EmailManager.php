@@ -5,6 +5,9 @@ namespace Action\Email;
 use Railken\Laravel\Manager\Contracts\AgentContract;
 use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Collection;
 
 class EmailManager extends ModelManager
 {
@@ -46,5 +49,46 @@ class EmailManager extends ModelManager
         $this->setAuthorizer(new EmailAuthorizer($this));
 
         parent::__construct($agent);
+    }
+
+    /**
+     * Resolve event.
+     *
+     * @param Email $action
+     * @param mixed $event
+     */
+    public function resolve(Email $action, $event)
+    {
+
+        $target = $event->user;
+        $data = (array)$event;
+
+        $targets = (new Collection($action->targets))->map(function($target) use ($event) {
+            return str_replace("{{\$target->email}}", $event->user->email, $target);
+        })->toArray();
+
+        $filename = $this->generateViewFile($action->content, "actions-emails-".$action->id);
+
+        $mail = new Mailable();
+        $mail->subject($action->subject);
+        $mail->view($filename, $data);
+        $mail->to($targets);
+
+        Mail::to([])->queue($mail);
+    }
+
+    public function generateViewFile($html, $url)
+    {
+        $path = Config::get('view.paths.0');
+
+        $view = "cache/".$url."-".hash('sha1', $url);
+
+        $filename = $path."/".$view.".blade.php";
+
+        !file_exists(dirname($filename)) && mkdir(dirname($filename), 0777, true);
+
+        file_put_contents($filename, $html);
+
+        return $view;
     }
 }

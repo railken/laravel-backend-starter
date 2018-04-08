@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
+function rest($prefix, $controller)
+{
+    Route::group(['prefix' => $prefix], function() use ($controller) {
+        Route::get('/', ['uses' => $controller.'@index']);
+        Route::post('/', ['uses' => $controller.'@create']);
+        Route::put('/{id}', ['uses' => $controller.'@update']);
+        Route::delete('/{id}', ['uses' => $controller.'@remove']);
+        Route::get('/{id}', ['uses' => $controller.'@show']);
+    });
+}
 
 
 Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], function() {
@@ -100,12 +110,7 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
             Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailLogsController@show']);
         });
 
-        Route::group(['prefix' => 'mail-listeners'], function() {
-            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@index']);
-            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@create']);
-            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@update']);
-            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@remove']);
-            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\MailListenersController@show']);
-        });
+        rest('action-emails', '\Api\Http\Controllers\Admin\ActionEmailsController');
+        rest('listeners', '\Api\Http\Controllers\Admin\ListenersController');
     });
 });

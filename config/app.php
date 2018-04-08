@@ -176,7 +176,7 @@ return [
         
         Railken\Laravel\Manager\ManagerServiceProvider::class,
         Railken\Laravel\App\AppServiceProvider::class,
-        \Core\MailListener\MailListenerServiceProvider::class
+        \Core\Listener\ListenerServiceProvider::class
 
     ],
 

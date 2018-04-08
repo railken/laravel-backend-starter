@@ -13,3 +13,5 @@ yarn-error.log
 .env
 
 composer\.lock
+
+resources/views/cache/

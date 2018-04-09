@@ -67,7 +67,7 @@ class EmailManager extends ModelManager
             return str_replace("{{\$target->email}}", $event->user->email, $target);
         })->toArray();
 
-        $filename = $this->generateViewFile($action->content, "actions-emails-".$action->id);
+        $filename = $this->generateViewFile($action->template, "actions-emails-".$action->id);
 
         $mail = new Mailable();
         $mail->subject($action->subject);

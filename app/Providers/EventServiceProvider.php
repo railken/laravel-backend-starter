@@ -16,9 +16,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
-        'Core\User\Events\UserRequestConfirmEmail' => [
-            'Emails\Listeners\UserSendConfirmationEmail'
-        ],
     ];
 
    public function boot()

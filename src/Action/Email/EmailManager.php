@@ -83,7 +83,7 @@ class EmailManager extends ModelManager
 
         $view = "cache/".$url."-".hash('sha1', $url);
 
-        $filename = $path."/".$view.".blade.php";
+        $filename = $path."/".$view.".twig";
 
         !file_exists(dirname($filename)) && mkdir(dirname($filename), 0777, true);
 

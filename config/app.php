@@ -64,7 +64,7 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-    'web_url' => env('WEB_APP_URL', 'http://localhost'),
+    'web_url' => env('APP_WEB_URL', 'http://localhost'),
 
 
     /*
@@ -163,7 +163,10 @@ return [
         /*
          * Package Service Providers...
          */
-
+        TwigBridge\ServiceProvider::class,
+        Railken\Laravel\Manager\ManagerServiceProvider::class,
+        Railken\Laravel\App\AppServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
@@ -174,8 +177,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         
-        Railken\Laravel\Manager\ManagerServiceProvider::class,
-        Railken\Laravel\App\AppServiceProvider::class,
         \Core\Listener\ListenerServiceProvider::class
 
     ],

@@ -77,7 +77,7 @@ class ActionEmailsController extends RestController
         $data = json_decode(base64_decode($request->input('data')));
         $template = $request->input('template');
 
-        $filename = $this->manager->generateViewFile($template, md5($request->input('data')));
+        $filename = $this->manager->generateViewFile($template, "tmp-".md5($request->input('data')));
 
         $response = view($filename, (array)$data);
 

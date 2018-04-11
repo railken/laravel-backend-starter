@@ -71,7 +71,7 @@ class ChecksumAttribute extends BaseAttribute
         }
 
         if ($entity->storage === 'disk') {
-            $entity->checksum = hash('sha1', Storage::get($entity->path));
+            $entity->checksum = hash('sha1', $entity->getStorage()->get($entity->path));
         }
     }
 }

@@ -18,6 +18,7 @@ class FilesController extends RestController
 
     protected static $query = [
         'id',
+        'disk_id',
         'storage',
         'type',
         'path',
@@ -32,6 +33,7 @@ class FilesController extends RestController
     ];
 
     protected static $fillable = [
+        'disk_id',
         'storage',
         'type',
         'path',
@@ -67,16 +69,20 @@ class FilesController extends RestController
 
         $params = new Bag($request->all());
 
+        // Validate "access/visibility before upload"
+        $path = $manager->upload(
+            $params->get('disk_id'),
+            $manager->decode('base64_decode', $params->get('content')),
+            $params->get('filename', null),
+            $params->get('extension', null),
+            $params->get('access', 'private')
+        );
+
         $result = $manager->create([
+            'disk_id' => $params->get('disk_id'),
             'storage' => 'disk',
             'type' => $params->get('type', 'default'),
-            'path' => $manager->upload(
-                $params->get('type', 'default'),
-                $manager->decode('base64_decode', $params->get('content')),
-                $params->get('filename', null),
-                $params->get('extension', null),
-                $params->get('access', 'private')
-            ),
+            'path' => $path,
             'expire_at' => $params->get('expire_at', null),
             'permission' => null,
             'access' => $params->get('access', 'private'),

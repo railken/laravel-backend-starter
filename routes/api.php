@@ -116,5 +116,6 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
             Route::post('/render', ['uses' => $controller.'@renderTemplate']);
         });
         rest('listeners', '\Api\Http\Controllers\Admin\ListenersController');
+        rest('disks', '\Api\Http\Controllers\Admin\DisksController');
     });
 });

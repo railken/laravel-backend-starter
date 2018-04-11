@@ -23,6 +23,7 @@ class FileManager extends ModelManager
     protected $attributes = [
         Attributes\Id\IdAttribute::class,
         Attributes\Storage\StorageAttribute::class,
+        Attributes\DiskId\DiskIdAttribute::class,
         Attributes\Type\TypeAttribute::class,
         Attributes\Path\PathAttribute::class,
         Attributes\Status\StatusAttribute::class,
@@ -69,8 +70,12 @@ class FileManager extends ModelManager
      *
      * @return string path
      */
-    public function upload($dir, $content, $filename = null, $ext = null, $access = 'private')
+    public function upload($disk_id, $content, $filename = null, $ext = null, $access = 'private')
     {
+
+        $disk = (new \Core\Disk\DiskManager())->getRepository()->findOneById($disk_id);
+
+        // Validate $disk
 
         // No filename? Generated a new one.
         if (!$filename) {
@@ -87,7 +92,9 @@ class FileManager extends ModelManager
             $ext = array_search($mimetype, config('filesystems.mime_types'));
         }
 
-        Storage::put($filename.".".$ext, $content, $access === 'public' ? 'public' : null);
+        $visibility = $access === 'public' ? 'public' : null;
+
+        $disk->getStorage()->put($filename.".".$ext, $content, $visibility);
 
         return $filename.".".$ext;
     }

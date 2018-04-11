@@ -29,6 +29,8 @@ class File extends Model implements EntityContract
         'permission',
         'access',
         'expire_at',
+        'disk',
+        'disk_id',
     ];
 
     /**
@@ -46,5 +48,18 @@ class File extends Model implements EntityContract
     public function user()
     {
         return $this->belongsTo(\Core\User\User::class, 'user_id')->latest();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function disk()
+    {
+        return $this->belongsTo(\Core\Disk\Disk::class, 'disk_id')->latest();
+    }
+
+    public function getStorage()
+    {
+        return $this->disk->getStorage();
     }
 }

@@ -30,12 +30,15 @@ class FileSerializer extends ModelSerializer
 
         $bag = $bag->only($this->manager->authorizer->getAuthorizedAttributes(Tokens::PERMISSION_SHOW, $entity)->keys()->toArray());
 
+        $storage = $entity->getStorage();
+
+
         if ($entity->access === 'private') {
-            $bag->set('readable', Storage::temporaryUrl($bag->get('path'), (new \Datetime())->modify('+2 hours')));
+            $bag->set('readable', $storage->temporaryUrl($bag->get('path'), (new \Datetime())->modify('+2 hours')));
         }
 
         if ($entity->access === 'public') {
-            $bag->set('readable', Storage::url($bag->get('path')));
+            $bag->set('readable', $storage->url($bag->get('path')));
         }
 
         return $bag;

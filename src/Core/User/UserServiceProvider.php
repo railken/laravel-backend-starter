@@ -11,8 +11,7 @@ class UserServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function boot()
     {
-        User::observe(UserObserver::class);
     }
 }

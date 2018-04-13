@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Core\User\User::observe(UserObserver::class);
         Schema::defaultStringLength(191);
+
 
         $configs = (new \Core\Config\ConfigManager())->getRepository()->newQuery()->get();
         foreach ($configs as $env) {
@@ -29,13 +31,16 @@ class AppServiceProvider extends ServiceProvider
 
         foreach ($disks as $disk) {
 
-            $base = 'filesystems.disks';
-            $name = $disk->getConfigName();
+            if ($disk->config) {
 
-            config([$base . '.' . $name . '.driver' => $disk->driver]);
+                $base = 'filesystems.disks';
+                $name = $disk->getConfigName();
 
-            foreach ($disk->config as $key => $value) {
-                config([$base . '.' . $name . '.' . $key => $value]);
+                config([$base . '.' . $name . '.driver' => $disk->driver]);
+
+                foreach ($disk->config as $key => $value) {
+                    config([$base . '.' . $name . '.' . $key => $value]);
+                }
             }
         }
 

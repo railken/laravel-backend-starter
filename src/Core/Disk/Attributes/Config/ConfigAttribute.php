@@ -22,7 +22,7 @@ class ConfigAttribute extends BaseAttribute
      *
      * @var bool
      */
-    protected $required = true;
+    protected $required = false;
 
     /**
      * Is the attribute unique.
@@ -61,5 +61,17 @@ class ConfigAttribute extends BaseAttribute
     public function valid(EntityContract $entity, $value)
     {
         return is_array($value);
+    }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return [];
     }
 }

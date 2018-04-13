@@ -17,7 +17,7 @@ class CreateTableDisks extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('driver');
-            $table->text('config');
+            $table->text('config')->nullable();
             $table->boolean('enabled');
             $table->timestamps();
         });

@@ -10,6 +10,7 @@ use Railken\Laravel\ApiHelpers\Query\Builder;
 use Railken\Laravel\ApiHelpers\Query\Visitors;
 
 use Railken\SQ\Exceptions\QuerySyntaxException;
+use Railken\Laravel\ApiHelpers\Exceptions\InvalidSorterFieldException;
 
 trait RestIndexTrait
 {
@@ -36,8 +37,12 @@ trait RestIndexTrait
         $sort->setKeys($this->keys->sortable->toArray());
 
 
-        # Check if sort field has
-        $sort->add($request->input('sort_field', 'id'), strtolower($request->input('sort_direction', 'desc')));
+        try {
+            $sort->add($request->input('sort_field', 'id'), strtolower($request->input('sort_direction', 'desc')));
+        } catch (InvalidSorterFieldException $e) {
+
+            return $this->error(["code" => "SORT_INVALID_FIELD", "message" => "Invalid field for sorting"]);
+        }
 
         foreach ($sort->get() as $attribute) {
             $query->orderBy($this->parseKey($attribute->getName()), $attribute->getDirection());

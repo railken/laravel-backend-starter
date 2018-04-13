@@ -30,13 +30,6 @@ trait RestIndexTrait
     {
         \DB::enableQuerylog();
         # FilterSyntaxException
-        try {
-            if ($request->input('query')) {
-                $query = $this->filterQuery($query, $request);
-            }
-        } catch (QuerySyntaxException $e) {
-            return $this->error(["code" => "QUERY_SYNTAX_ERROR", "message" => "syntax error detected in filter"]);
-        }
 
         # Sorter
         $sort = new Sorter();
@@ -49,7 +42,6 @@ trait RestIndexTrait
         foreach ($sort->get() as $attribute) {
             $query->orderBy($this->parseKey($attribute->getName()), $attribute->getDirection());
         }
-
 
         # Select
         $select = collect(explode(",", $request->input("select", "")));
@@ -64,10 +56,16 @@ trait RestIndexTrait
             $select = $this->keys->selectable;
 
 
-        $selectable = $select
-            ->map(function ($key) {
-                return $this->parseKey($key);
-            });
+        $selectable = $select;
+
+
+        try {
+            if ($request->input('query')) {
+                $query = $this->filterQuery($query, $request->input('query'), $selectable);
+            }
+        } catch (QuerySyntaxException $e) {
+            return $this->error(["code" => "QUERY_SYNTAX_ERROR", "message" => "syntax error detected in filter"]);
+        }
 
         # Pagination
         $paginator = new Paginator();
@@ -85,14 +83,16 @@ trait RestIndexTrait
             }),
             'select' => $select->values(),
             'pagination' => $paginator->all(),
-            'sort' => $sort
+            'sort' => $sort->get()->map(function($attribute) {
+                return ['name' => $attribute->getName(), 'value' => $attribute->getDirection()];
+            })->toArray(),
         ]);
 
         // print_r(\DB::getQueryLog());
         return $response;
     }
 
-    public function filterQuery($query, $request)
+    public function filterQuery($query, $raw, $selectable)
     {
         $filter = new Filter();
 
@@ -100,7 +100,7 @@ trait RestIndexTrait
 
         $builder = new Builder([]);
         $builder->setVisitors([
-            (new \Api\Query\Visitors\KeyVisitor($builder))->setManager($this->manager),
+            (new \Api\Query\Visitors\KeyVisitor($builder))->setManager($this->manager)->setKeys($selectable),
             new Visitors\EqVisitor($builder),
             new Visitors\NotEqVisitor($builder),
             new Visitors\GtVisitor($builder),
@@ -119,9 +119,9 @@ trait RestIndexTrait
         ]);
 
         try {
-            $builder->build($query, $parser->parse($request->input('query')));
+            $builder->build($query, $parser->parse($raw));
         } catch (\Railken\SQ\Exceptions\QuerySyntaxException $e) {
-            throw new \Railken\SQ\Exceptions\QuerySyntaxException($request->input('query'));
+            throw new \Railken\SQ\Exceptions\QuerySyntaxException($raw);
         }
 
         return $query;

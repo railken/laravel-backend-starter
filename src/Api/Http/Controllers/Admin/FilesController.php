@@ -69,24 +69,15 @@ class FilesController extends RestController
 
         $params = new Bag($request->all());
 
-        // Validate "access/visibility before upload"
-        $path = $manager->upload(
-            $params->get('disk_id'),
-            $manager->decode('base64_decode', $params->get('content')),
-            $params->get('filename', null),
-            $params->get('extension', null),
-            $params->get('access', 'private')
-        );
-
         $result = $manager->create([
             'disk_id' => $params->get('disk_id'),
-            'storage' => 'disk',
+            'content' => $params->get('content'),
             'type' => $params->get('type', 'default'),
-            'path' => $path,
             'expire_at' => $params->get('expire_at', null),
             'permission' => null,
             'access' => $params->get('access', 'private'),
-            'status' => 'pending'
+            'status' => 'pending',
+            'user' => $this->getUser(),
         ]);
 
         if (!$result->ok()) {

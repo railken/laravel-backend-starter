@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableLogs extends Migration
+class CreateListenersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,14 @@ class CreateTableLogs extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('http_logs', function($table) {
+    {  
+        Schema::create('listeners',function($table) {
             $table->increments('id');
-            $table->string('type');
-            $table->string('url');
-            $table->string('category');
-            $table->string('method');
-            $table->string('ip');
-            $table->longtext('request');
-            $table->longtext('response');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->text('event_class');
+            $table->morphs('action');
+            $table->boolean('enabled');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateTableLogs extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('listeners');
     }
 }

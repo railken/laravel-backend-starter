@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMailLogs extends Migration
+class CreateMailLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -11,8 +11,7 @@ class CreateMailLogs extends Migration
      * @return void
      */
     public function up()
-    {
-        
+    {   
         Schema::create('mail_logs',function($table) {
             $table->increments('id');
             $table->string('to');
@@ -31,6 +30,6 @@ class CreateMailLogs extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('mail_logs');
     }
 }

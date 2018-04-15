@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableLogs extends Migration
+class CreateHttpLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateTableLogs extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('http_logs', function($table) {
+            $table->increments('id');
             $table->string('type');
-            $table->string('category')->nullable();
-            $table->string('message')->nullable();
-            $table->text('vars');
-            $table->bigInteger('parent_id')->unsigned()->nullable();
-            $table->foreign('parent_id')->references('id')->on('logs');
+            $table->string('url');
+            $table->string('category');
+            $table->string('method');
+            $table->string('ip');
+            $table->longtext('request');
+            $table->longtext('response');
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateTableLogs extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('http_logs');
     }
 }

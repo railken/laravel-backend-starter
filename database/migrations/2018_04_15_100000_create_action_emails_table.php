@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUsersPendingEmails extends Migration
+class CreateActionEmailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,16 @@ class CreateTableUsersPendingEmails extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::create('users_pending_emails', function ($table) {
+    {  
+        Schema::create('action_emails',function($table) {
             $table->increments('id');
-            $table->string('token');
-            $table->string('email');
-            $table->integer('user_id')->unsigned();
-            $table->timestamp('notified_at')->nullable();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->text('mock_data');
+            $table->text('targets');
+            $table->string('subject');
+            $table->longtext('template');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateTableUsersPendingEmails extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_pending_emails');
+        Schema::dropIfExsits('action_emails');
     }
 }

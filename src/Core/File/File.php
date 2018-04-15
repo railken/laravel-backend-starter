@@ -31,6 +31,9 @@ class File extends Model implements EntityContract
         'expire_at',
         'disk',
         'disk_id',
+        'ext',
+        'content_type',
+        'content',
     ];
 
     /**

@@ -65,4 +65,13 @@ class PathAttribute extends BaseAttribute
     {
         return true;
     }
+
+    public function getDefault(EntityContract $entity)
+    {
+        do {
+            $filename = str_random(32)."-".str_random(32);
+        } while ($this->getManager()->getRepository()->newQueryOneDiskPath($filename)->count() > 0);
+
+        return $filename;
+    }
 }

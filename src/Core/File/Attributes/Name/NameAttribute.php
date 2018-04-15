@@ -65,4 +65,15 @@ class NameAttribute extends BaseAttribute
     {
         return v::length(1, 255)->validate($value);
     }
+
+
+    public function getDefault(EntityContract $entity)
+    {
+        do {
+            $filename = str_random(32)."-".str_random(32)."-".str_random(32)."-".str_random(32);
+        } while ($this->getManager()->getRepository()->newQueryOneDiskPath($filename)->count() > 0);
+
+        return $filename;
+    }
+
 }

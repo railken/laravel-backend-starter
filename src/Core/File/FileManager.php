@@ -11,6 +11,7 @@ use Railken\Laravel\Manager\ResultAction;
 use Illuminate\Support\Facades\DB;
 use Railken\Laravel\Manager\Tokens;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Illuminate\Support\Facades;
 
 class FileManager extends ModelManager
 {
@@ -22,19 +23,22 @@ class FileManager extends ModelManager
      */
     protected $attributes = [
         Attributes\Id\IdAttribute::class,
-        Attributes\Storage\StorageAttribute::class,
-        Attributes\DiskId\DiskIdAttribute::class,
         Attributes\Type\TypeAttribute::class,
         Attributes\Path\PathAttribute::class,
+        Attributes\Access\AccessAttribute::class,
+        Attributes\Storage\StorageAttribute::class,
+        Attributes\DiskId\DiskIdAttribute::class,
+        Attributes\Ext\ExtAttribute::class,
+        Attributes\ContentType\ContentTypeAttribute::class,
         Attributes\Status\StatusAttribute::class,
+        Attributes\UserId\UserIdAttribute::class,
+        Attributes\Permission\PermissionAttribute::class,
+        Attributes\ExpireAt\ExpireAtAttribute::class,
+        Attributes\Content\ContentAttribute::class,
         Attributes\Checksum\ChecksumAttribute::class,
         Attributes\CreatedAt\CreatedAtAttribute::class,
         Attributes\UpdatedAt\UpdatedAtAttribute::class,
         Attributes\DeletedAt\DeletedAtAttribute::class,
-        Attributes\UserId\UserIdAttribute::class,
-        Attributes\Access\AccessAttribute::class,
-        Attributes\Permission\PermissionAttribute::class,
-        Attributes\ExpireAt\ExpireAtAttribute::class,
     ];
 
     /**
@@ -60,92 +64,5 @@ class FileManager extends ModelManager
         $this->setValidator(new FileValidator($this));
 
         parent::__construct($agent);
-    }
-
-
-    /**
-     * Upload a file
-     *
-     * @param mixed $file
-     *
-     * @return string path
-     */
-    public function upload($disk_id, $content, $filename = null, $ext = null, $access = 'private')
-    {
-
-        $disk = (new \Core\Disk\DiskManager())->getRepository()->findOneById($disk_id);
-
-        // Validate $disk
-
-        // No filename? Generated a new one.
-        if (!$filename) {
-            do {
-                $filename = $dir."/".str_random(32)."-".str_random(32)."-".str_random(32)."-".str_random(32);
-            } while ($this->getRepository()->newQueryOneDiskPath($filename)->count() > 0);
-        }
-
-        // No extension? Try to detect
-        if (!$ext) {
-            Storage::disk('local')->put($filename, $content);
-
-            $mimetype = Storage::disk('local')->mimeType($filename);
-            $ext = array_search($mimetype, config('filesystems.mime_types'));
-        }
-
-        $visibility = $access === 'public' ? 'public' : null;
-
-        $disk->getStorage()->put($filename.".".$ext, $content, $visibility);
-
-        return $filename.".".$ext;
-    }
-
-    /**
-     * Decode content
-     *
-     * @param string $encoding
-     * @param string $encoded
-     *
-     * @return string
-     */
-    public function decode($encoding, $content)
-    {
-        switch ($encoding) {
-            case 'base64': default:
-                $content = preg_replace("/^data\:image\/([\w]*)\;base64\,/", "", $content);
-                return base64_decode($content);
-            break;
-        }
-    }
-
-
-    /**
-     * Delete a EntityContract.
-     *
-     * @param EntityContract $entity
-     *
-     * @return ResultAction
-     */
-    protected function delete(EntityContract $entity)
-    {
-        $result = new ResultAction();
-
-        $result->addErrors($this->authorizer->authorize(Tokens::PERMISSION_REMOVE, $entity, ParameterBag::factory([])));
-
-        if (!$result->ok()) {
-            return $result;
-        }
-
-        try {
-            DB::beginTransaction();
-            $entity->delete();
-            Storage::delete($entity->path);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            throw $e;
-        }
-
-        return $result;
     }
 }

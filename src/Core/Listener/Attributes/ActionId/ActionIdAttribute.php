@@ -87,6 +87,9 @@ class ActionIdAttribute extends BelongsToAttribute
             case 'Action\Email\Email':
                 return new \Action\Email\EmailManager($this->getManager()->getAgent());
             break;
+            case 'Action\Notification\Notification':
+                return new \Action\Notification\NotificationManager($this->getManager()->getAgent());
+            break;
         }
 
         throw new Exceptions\ListenerActionIdManagerNotFoundException();

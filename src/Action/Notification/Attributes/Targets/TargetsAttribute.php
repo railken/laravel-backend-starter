@@ -1,20 +1,20 @@
 <?php
 
-namespace Core\Listener\Attributes\ActionType;
+namespace Action\Notification\Attributes\Targets;
 
 use Railken\Laravel\Manager\Attributes\BaseAttribute;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 use Railken\Laravel\Manager\Tokens;
 use Respect\Validation\Validator as v;
 
-class ActionTypeAttribute extends BaseAttribute
+class TargetsAttribute extends BaseAttribute
 {
     /**
      * Name attribute.
      *
      * @var string
      */
-    protected $name = 'action_type';
+    protected $name = 'targets';
 
     /**
      * Is the attribute required
@@ -37,17 +37,17 @@ class ActionTypeAttribute extends BaseAttribute
      * @var array
      */
     protected $exceptions = [
-        Tokens::NOT_DEFINED    => Exceptions\ListenerActionTypeNotDefinedException::class,
-        Tokens::NOT_VALID      => Exceptions\ListenerActionTypeNotValidException::class,
-        Tokens::NOT_AUTHORIZED => Exceptions\ListenerActionTypeNotAuthorizedException::class,
+        Tokens::NOT_DEFINED    => Exceptions\NotificationTargetsNotDefinedException::class,
+        Tokens::NOT_VALID      => Exceptions\NotificationTargetsNotValidException::class,
+        Tokens::NOT_AUTHORIZED => Exceptions\NotificationTargetsNotAuthorizedException::class,
     ];
 
     /**
      * List of all permissions.
      */
     protected $permissions = [
-        Tokens::PERMISSION_FILL => 'listener.attributes.action_type.fill',
-        Tokens::PERMISSION_SHOW => 'listener.attributes.action_type.show',
+        Tokens::PERMISSION_FILL => 'notification.attributes.targets.fill',
+        Tokens::PERMISSION_SHOW => 'notification.attributes.targets.show',
     ];
 
     /**
@@ -60,9 +60,6 @@ class ActionTypeAttribute extends BaseAttribute
      */
     public function valid(EntityContract $entity, $value)
     {
-        return in_array($value, [
-            'Action\Email\Email',
-            'Action\Notification\Notification'
-        ]);
+        return v::length(1, 255)->validate($value);
     }
 }

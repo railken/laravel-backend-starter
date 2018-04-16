@@ -96,5 +96,6 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
         rest('action-emails', '\Api\Http\Controllers\Admin\ActionEmailsController', function($controller) {
             Route::post('/render', ['uses' => $controller.'@renderTemplate']);
         });
+        rest('action-notifications', '\Api\Http\Controllers\Admin\ActionNotificationsController');
     });
 });

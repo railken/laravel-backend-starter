@@ -3,31 +3,32 @@
 namespace Action\Notification;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Railken\Laravel\Manager\Contracts\EntityContract;
 
 class Notification extends Model implements EntityContract
 {
-    use SoftDeletes;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'notification';
+    protected $table = 'action_notifications';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at', 'description', 'targets'];
 
     /**
-     * The attributes that should be mutated to dates.
+     * Resolve event
      *
-     * @var array
+     * @param $event
      */
-    protected $dates = ['deleted_at'];
+    public function resolve($event)
+    {
+        (new NotificationManager())->resolve($this, $event);
+    }
 }

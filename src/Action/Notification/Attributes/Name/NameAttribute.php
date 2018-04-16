@@ -29,7 +29,7 @@ class NameAttribute extends BaseAttribute
      *
      * @var bool
      */
-    protected $unique = false;
+    protected $unique = true;
 
     /**
      * List of all exceptions used in validation.
@@ -40,6 +40,7 @@ class NameAttribute extends BaseAttribute
         Tokens::NOT_DEFINED    => Exceptions\NotificationNameNotDefinedException::class,
         Tokens::NOT_VALID      => Exceptions\NotificationNameNotValidException::class,
         Tokens::NOT_AUTHORIZED => Exceptions\NotificationNameNotAuthorizedException::class,
+        Tokens::NOT_UNIQUE     => Exceptions\NotificationNameNotUniqueException::class,
     ];
 
     /**

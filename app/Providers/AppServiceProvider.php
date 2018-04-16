@@ -18,15 +18,18 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
 
-        try {
-            $configs = (new \Core\Config\ConfigManager())->getRepository()->newQuery()->get();
-            foreach ($configs as $env) {
-                if ($env->value != null) {
+        if (Schema::hasTable('configs')) {
+            $configs = (new \Core\Config\ConfigManager())->getRepository()->findToLoad();
 
-                    $key = $env->resolveKey($env->key);
-                    config([$key => $env->value]);
-                }
-            }
+            $configs = $configs->mapWithKeys(function($config, $key) {
+                return [$config->resolveKey($config->key) => $config->value];
+            })->toArray();
+
+            config($configs);
+        }
+
+
+        if (Schema::hasTable('disks')) {
 
             $disks = (new \Core\Disk\DiskManager())->getRepository()->newQuery()->get();
 
@@ -44,9 +47,6 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
             } 
-
-        } catch (\Exception $e) {
-            // Silent error
         }
 
     }

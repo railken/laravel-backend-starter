@@ -12,4 +12,12 @@ class ConfigRepository extends ModelRepository
      * @var string
      */
     public $entity = Config::class;
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function findToLoad()
+    {
+    	return $this->newQuery()->whereNotNull('value')->get();
+    }
 }

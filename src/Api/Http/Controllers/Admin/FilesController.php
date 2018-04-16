@@ -19,7 +19,6 @@ class FilesController extends RestController
     protected static $query = [
         'id',
         'disk_id',
-        'storage',
         'type',
         'path',
         'status',
@@ -34,7 +33,6 @@ class FilesController extends RestController
 
     protected static $fillable = [
         'disk_id',
-        'storage',
         'type',
         'path',
         'status',

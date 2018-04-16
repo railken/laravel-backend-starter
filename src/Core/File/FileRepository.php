@@ -23,6 +23,6 @@ class FileRepository extends ModelRepository
      */
     public function newQueryOneDiskPath($path)
     {
-        return $this->getQuery()->where('storage', 'disk')->where('path', 'like', '%'.$path.'%');
+        return $this->getQuery()->where('path', 'like', '%'.$path.'%');
     }
 }

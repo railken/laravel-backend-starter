@@ -79,6 +79,7 @@ class TemplateAttribute extends BaseAttribute
             "       <h1>Welcome to Aperture Science!</h1>\n".
             "    </div>\n".
             "    <div class='content'>\n".
+            "       <p>Hello {{ user.name }}</p>\n".
             "       <a class='btn btn-primary' href='{{ web_url }}/home'>Visit our home</a>\n".
             "    </div>\n".
             "{% endblock %}".

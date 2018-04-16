@@ -38,7 +38,6 @@ class FilesController extends Controller
         $params = new Bag($request->all());
 
         $result = $manager->create([
-            'storage' => 'disk',
             'type' => $params->get('type', 'default'),
             'path' => $manager->upload($manager->decode('base64_decode', $params->get('content'))),
             'status' => 'pending'

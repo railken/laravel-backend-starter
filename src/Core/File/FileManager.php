@@ -26,7 +26,6 @@ class FileManager extends ModelManager
         Attributes\Type\TypeAttribute::class,
         Attributes\Path\PathAttribute::class,
         Attributes\Access\AccessAttribute::class,
-        Attributes\Storage\StorageAttribute::class,
         Attributes\DiskId\DiskIdAttribute::class,
         Attributes\Ext\ExtAttribute::class,
         Attributes\ContentType\ContentTypeAttribute::class,

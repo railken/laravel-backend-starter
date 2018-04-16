@@ -17,13 +17,19 @@ class ListenerServiceProvider extends ServiceProvider
         Listener::observe(ListenerObserver::class);
         
         Event::listen('Core*', function ($event_name, $events) {
-            $manager = new \Core\Listener\ListenerManager();
+            $lm = new \Core\Listener\ListenerManager();
+            $elm = new \Core\EventLog\EventLogManager();
+            $listeners = $lm->getRepository()->findByEventClass($event_name);
 
-            $listeners = $manager->getRepository()->findByEventClass($event_name);
 
             foreach ($listeners as $listener) {
                 foreach ($events as $event) {
                     $listener->action->resolve($event);
+
+                    $result = $elm->create([
+                        'event_class' => $event_name,
+                        'vars' => serialize($events),
+                    ]);
                 }
             }
         });

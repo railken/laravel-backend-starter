@@ -16,13 +16,14 @@ use Illuminate\Http\Request;
 if (!function_exists('rest')) {
     function rest($prefix, $controller, $group = null) {
         Route::group(['prefix' => $prefix], function() use ($controller, $group) {
+            $group && is_callable($group) && $group($controller);
+            
             Route::get('/', ['uses' => $controller.'@index']);
             Route::post('/', ['uses' => $controller.'@create']);
             Route::put('/{id}', ['uses' => $controller.'@update']);
             Route::delete('/{id}', ['uses' => $controller.'@remove']);
             Route::get('/{id}', ['uses' => $controller.'@show']);
 
-            $group && is_callable($group) && $group($controller);
         });
     }
 }
@@ -68,37 +69,17 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
             Route::patch('/', ['uses' => '\Api\Http\Controllers\Admin\ConfigsController@update']);
         });
 
-        Route::group(['prefix' => 'users'], function() {
-            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\UsersController@index']);
-            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\UsersController@create']);
-            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\UsersController@update']);
-            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\UsersController@remove']);
-            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\UsersController@show']);
+
+        rest('users', '\Api\Http\Controllers\Admin\UsersController');
+        rest('addresses', '\Api\Http\Controllers\Admin\AddressesController');
+        rest('files', '\Api\Http\Controllers\Admin\FilesController');
+        rest('http-logs', '\Api\Http\Controllers\Admin\HttpLogsController');
+        rest('listeners', '\Api\Http\Controllers\Admin\ListenersController');
+        rest('disks', '\Api\Http\Controllers\Admin\DisksController');
+        rest('event-logs', '\Api\Http\Controllers\Admin\EventLogsController', function($controller) {
+            Route::get('/stats', ['uses' => $controller.'@stats']);
         });
 
-        Route::group(['prefix' => 'addresses'], function() {
-            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\AddressesController@index']);
-            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\AddressesController@create']);
-            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\AddressesController@update']);
-            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\AddressesController@remove']);
-            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\AddressesController@show']);
-        });
-
-        Route::group(['prefix' => 'files'], function() {
-            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\FilesController@index']);
-            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\FilesController@create']);
-            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\FilesController@update']);
-            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\FilesController@remove']);
-            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\FilesController@show']);
-        });
-
-        Route::group(['prefix' => 'http-logs'], function() {
-            Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@index']);
-            Route::post('/', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@create']);
-            Route::put('/{id}', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@update']);
-            Route::delete('/{id}', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@remove']);
-            Route::get('/{id}', ['uses' => '\Api\Http\Controllers\Admin\HttpLogsController@show']);
-        });
 
         Route::group(['prefix' => 'logs'], function() {
             Route::get('/', ['uses' => '\Api\Http\Controllers\Admin\LogsController@index']);
@@ -115,7 +96,5 @@ Route::group(['middleware' => ['cors', 'errors', 'logger'], 'prefix' => 'v1'], f
         rest('action-emails', '\Api\Http\Controllers\Admin\ActionEmailsController', function($controller) {
             Route::post('/render', ['uses' => $controller.'@renderTemplate']);
         });
-        rest('listeners', '\Api\Http\Controllers\Admin\ListenersController');
-        rest('disks', '\Api\Http\Controllers\Admin\DisksController');
     });
 });

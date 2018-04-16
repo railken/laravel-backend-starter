@@ -71,6 +71,7 @@ trait RestIndexTrait
         } catch (QuerySyntaxException $e) {
             return $this->error(["code" => "QUERY_SYNTAX_ERROR", "message" => "syntax error detected in filter"]);
         }
+        
 
         # Pagination
         $paginator = new Paginator();

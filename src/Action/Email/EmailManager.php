@@ -60,11 +60,10 @@ class EmailManager extends ModelManager
      */
     public function resolve(Email $action, $event)
     {
-        $target = $event->user;
         $data = (array)$event;
 
         $targets = (new Collection($action->targets))->map(function ($target) use ($event) {
-            return str_replace("{{target.email}}", $event->user->email, $target);
+            return str_replace("{{user.email}}", $event->user->email, $target);
         })->toArray();
 
         $filename = $this->generateViewFile($action->template, "actions-emails-".$action->id);

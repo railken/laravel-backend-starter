@@ -62,4 +62,16 @@ class TargetsAttribute extends BaseAttribute
     {
         return true;
     }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return ['{{user.email}}'];
+    }
 }

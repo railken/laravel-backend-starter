@@ -22,7 +22,7 @@ class TemplateAttribute extends BaseAttribute
      *
      * @var bool
      */
-    protected $required = true;
+    protected $required = false;
 
     /**
      * Is the attribute unique.
@@ -61,5 +61,27 @@ class TemplateAttribute extends BaseAttribute
     public function valid(EntityContract $entity, $value)
     {
         return true;
+    }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return "".
+            "{% extends 'emails/layout' %}\n".
+            "{% block main %}\n".
+            "    <div class='title'>\n".
+            "       <h1>Welcome to Aperture Science!</h1>\n".
+            "    </div>\n".
+            "    <div class='content'>\n".
+            "       <a class='btn btn-primary' href='{{ web_url }}/home'>Visit our home</a>\n".
+            "    </div>\n".
+            "{% endblock %}".
+            "";
     }
 }

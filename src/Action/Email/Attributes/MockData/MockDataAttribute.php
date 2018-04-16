@@ -62,4 +62,16 @@ class MockDataAttribute extends BaseAttribute
     {
         return v::length(1, 255)->validate($value);
     }
+
+    /**
+     * Retrieve default value
+     *
+     * @param EntityContract $entity
+     *
+     * @return mixed
+     */
+    public function getDefault(EntityContract $entity)
+    {
+        return json_encode(['user' => ['id' => 1, 'name' => 'GlaDOS', 'email' => 'GlaDOS@test.net']]);
+    }
 }

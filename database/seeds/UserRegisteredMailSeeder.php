@@ -17,19 +17,20 @@ class UserRegisteredMailSeeder extends Seeder
 
         $result = $am->create([
             'name' => 'EMAIL_REGISTRATION',
-            'targets' => ["{{target.email}}","admin@admin.com"],
+            'targets' => ["{{user.email}}","admin@admin.com"],
             'mock_data' => '{
     "user": {
         "id":1,
-        "name":"Mario"
+        "name":"GLaDOS",
+        "email":"GLaDOS@test.net"
     },
     "token": "ABCD"
 }',
-            'subject' => 'Welcome',
+            'subject' => 'Welcome to ApertureScience!!',
             'template' => "{% extends 'emails/layout' %}
     {% block main %}
     <div class='title'>
-      <h1>Welcome!</h1>
+      <h1>Welcome to Aperture Science!!</h1>
     </div>
     <div class='content'>
 
@@ -43,7 +44,7 @@ class UserRegisteredMailSeeder extends Seeder
 
       <p>Type the code into the apposite form </p>
       <p>Or simply click the follwing button</p>
-      <a class='btn btn-primary' href='{{ web_url }}/confirm-email/{{ token }}''>Verify Email</a>
+      <a class='btn btn-primary' href='{{ web_url }}/confirm-email/{{ token }}'>Verify Email</a>
 
       <p class='small'>Full link: <i>{{ web_url }}/confirm-email/{{ token }}</i></p>
     </div>

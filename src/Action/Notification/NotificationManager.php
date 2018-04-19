@@ -7,6 +7,7 @@ use Railken\Laravel\Manager\ModelManager;
 use Railken\Laravel\Manager\Tokens;
 use Illuminate\Support\Facades\Notification as NotificationFacade;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 
 class NotificationManager extends ModelManager
 {
@@ -21,7 +22,9 @@ class NotificationManager extends ModelManager
         Attributes\CreatedAt\CreatedAtAttribute::class, 
         Attributes\UpdatedAt\UpdatedAtAttribute::class,
         Attributes\Description\DescriptionAttribute::class,
-        Attributes\Targets\TargetsAttribute::class, 
+        Attributes\Targets\TargetsAttribute::class,
+        Attributes\Template\TemplateAttribute::class,
+        Attributes\MockData\MockDataAttribute::class, 
     ];
 
     /**
@@ -63,7 +66,6 @@ class NotificationManager extends ModelManager
         $repository = (new \Core\User\UserManager())->getRepository();
         (new Collection($action->targets))->map(function ($target) use ($event, $repository, &$users) {
 
-            print_r($target);
             if ($target === "{{user.id}}") {
                 $users[] = $repository->findOneById($event->user->id);
             } 
@@ -74,7 +76,28 @@ class NotificationManager extends ModelManager
 
         });
 
+        $template = $action->template;
+        $filename = $this->generateViewFile($template, $action->id);
 
-        NotificationFacade::send($users, new BaseNotification($event));
+        $response = view($filename, (array)$event);
+
+
+        NotificationFacade::send($users, new BaseNotification($action, $event, $response->render()));
+    }
+
+
+    public function generateViewFile($html, $url)
+    {
+        $path = Config::get('view.paths.0');
+
+        $view = "cache/".$url."-".hash('sha1', $url);
+
+        $filename = $path."/".$view.".twig";
+
+        !file_exists(dirname($filename)) && mkdir(dirname($filename), 0777, true);
+
+        file_put_contents($filename, $html);
+
+        return $view;
     }
 }

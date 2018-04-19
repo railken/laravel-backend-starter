@@ -20,7 +20,32 @@ class Notification extends Model implements EntityContract
      *
      * @var array
      */
-    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'deleted_at', 'description', 'targets'];
+    protected $fillable = ['id', 'name', 'created_at', 'updated_at', 'description', 'targets', 'message', 'template', 'mock_data'];
+
+    /**
+     * Set the the email targets
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function setTargetsAttribute($value)
+    {
+        $this->attributes['targets'] = json_encode(is_array($value) ? $value : explode(",", str_replace(" ", "", $value)));
+    }
+
+
+    /**
+     * Get the the email targets
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function getTargetsAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
     /**
      * Resolve event

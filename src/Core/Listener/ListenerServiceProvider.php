@@ -25,13 +25,13 @@ class ListenerServiceProvider extends ServiceProvider
             foreach ($listeners as $listener) {
                 foreach ($events as $event) {
                     $listener->action->resolve($event);
-
-                    $result = $elm->create([
-                        'event_class' => $event_name,
-                        'vars' => serialize($events),
-                    ]);
                 }
             }
+
+            $result = $elm->create([
+                'event_class' => $event_name,
+                'vars' => serialize($events),
+            ]);
         });
     }
 }

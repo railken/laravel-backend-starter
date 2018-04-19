@@ -30,6 +30,8 @@ class ActionNotificationsController extends RestController
         'name',
         'targets',
         'description',
+        'template',
+        'mock_data',
         'created_at',
         'updated_at',
     ];
@@ -43,6 +45,8 @@ class ActionNotificationsController extends RestController
         'name',
         'targets',
         'description',
+        'template',
+        'mock_data'
     ];
 
     public function __construct(NotificationManager $manager)
@@ -59,6 +63,25 @@ class ActionNotificationsController extends RestController
     public function getQuery()
     {
         return $this->manager->repository->getQuery();
+    }
+
+    /**
+     * Render a template
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function renderTemplate(Request $request)
+    {   
+        $data = json_decode(base64_decode($request->input('data')));
+        $template = $request->input('template');
+
+        $filename = $this->manager->generateViewFile($template, $request->input('data'));
+
+        $response = view($filename, (array)$data);
+
+        return $this->success(['resource' => ['rendered' => $response->render()]]);
     }
 
 }

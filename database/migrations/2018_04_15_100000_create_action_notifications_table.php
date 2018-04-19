@@ -17,6 +17,8 @@ class CreateActionNotificationsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('mock_data');
+            $table->longtext('template');
             $table->text('targets');
             $table->timestamps();
         });

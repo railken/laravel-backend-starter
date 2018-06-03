@@ -20,7 +20,8 @@
         "railken/laravel-application": "^1.0",
         "railken/laravel-manager": "^3.0.3",
         "ralouphie/mimey": "^1.0",
-        "rcrowe/twigbridge": "^0.9.6"
+        "rcrowe/twigbridge": "^0.9.6",
+        "railken/lara-ore": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

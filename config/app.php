@@ -177,7 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         
-        \Core\Listener\ListenerServiceProvider::class
+        \Railken\LaraOre\CoreServiceProvider::class
 
     ],
 

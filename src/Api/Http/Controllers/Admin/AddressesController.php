@@ -1,11 +1,10 @@
 <?php
 namespace Api\Http\Controllers\Admin;
 
-use Api\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Core\Address\AddressManager;
-use Api\Http\Controllers\Traits as RestTraits;
-use Api\Http\Controllers\RestController;
+use Railken\LaraOre\Api\Http\Controllers\Traits as RestTraits;
+use Railken\LaraOre\Api\Http\Controllers\RestController;
 
 class AddressesController extends RestController
 {

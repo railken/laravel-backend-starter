@@ -38,6 +38,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         parent::report($exception);
+        
     }
 
     /**
@@ -49,7 +50,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+
+        $response = parent::render($request, $exception);
+
+        if ($exception instanceof \Symfony\Component\Debug\Exception\FatalErrorException) {
+            $kernel = app(\Illuminate\Contracts\Http\Kernel::class);
+
+            $kernel->terminate($request, $response);
+        } 
+
+        return $response;
     }
 
 
